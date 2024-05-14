@@ -3,12 +3,11 @@ import random
 import requests
 import time
 
-players_id = random.randrange(1,151)
-computers_id = random.randrange(1,151)
 url = "https://pokeapi.co/api/v2/pokemon/"
 
-def get_pokemon(id):
-    response = requests.get(url + str(id))
+def get_random_pokemon():
+    random_num = random.randrange(1,151)
+    response = requests.get(url + str(random_num))
     pokemon_data = response.json()
 
     return {
@@ -26,6 +25,14 @@ def compare_stats(stat, players_pokemon, computers_pokemon):
     else:
         return "draw"
 
+def display_results(result):
+    if result == "player":
+        return "YOU WIN!"
+    elif result == "computer":
+        return "The computer wins"
+    elif result == "draw":
+        return "It's a draw"
+
 def run():
     print("Hello and welcome to this Pokémon game!\n")
     print("Getting you a random pokemon card")
@@ -33,8 +40,8 @@ def run():
     print("------------")
     time.sleep(1)
 
-    players_pokemon = get_pokemon(players_id)
-    computers_pokemon = get_pokemon(computers_id)
+    players_pokemon = get_random_pokemon()
+    computers_pokemon = get_random_pokemon()
 
     print("Your Pokémon is {}\n".format(players_pokemon["name"]))
     print("It's id is {}, it's height is {} and it's weight is {}\n".format(players_pokemon["id"], players_pokemon["height"], players_pokemon["weight"]))
@@ -55,11 +62,6 @@ def run():
     print("------------")
     time.sleep(1)
 
-    if game_result == "player":
-        print("YOU WIN!")
-    elif game_result == "computer":
-        print("The computer wins")
-    elif game_result == "draw":
-        print("It's a draw")
+    print(display_results(game_result))
 
 run()
