@@ -2,11 +2,10 @@ import random
 import requests
 import time
 
-
 print("Hello and welcome to this Pokémon game!\n")
-url = "https://pokeapi.co/api/v2/pokemon/"
 
 def get_random_pokemon():
+    url = "https://pokeapi.co/api/v2/pokemon/"
     random_num = random.randrange(1,151)
     response = requests.get(url + str(random_num))
     pokemon_data = response.json()
@@ -15,14 +14,15 @@ def get_random_pokemon():
         "name": pokemon_data["name"],
         "id": pokemon_data["id"],
         "height": pokemon_data["height"],
-        "weight": pokemon_data["weight"]
+        "weight": pokemon_data["weight"],
+        "speed": pokemon_data["stats"][-1]["base_stat"]
     }
 
 def compare_stats(stat, players_pokemon, computers_pokemon):
     if players_pokemon[stat] > computers_pokemon[stat]:
         return ["YOU WIN!", 0]
     elif players_pokemon[stat] < computers_pokemon[stat]:
-        return  ["The computer wins", 1]
+        return  ["You lose :(", 1]
     else:
         return ["It's a draw", 2]
 
@@ -44,11 +44,11 @@ def run():
     computers_pokemon = get_random_pokemon()
 
     print("Your Pokémon is {}\n".format(players_pokemon["name"]))
-    print("It's id is {}, it's height is {} and it's weight is {}\n".format(players_pokemon["id"], players_pokemon["height"], players_pokemon["weight"]))
+    print("It's id is {}, it's height is {}, it's weight is {} and it's speed is {}\n".format(players_pokemon["id"], players_pokemon["height"], players_pokemon["weight"], players_pokemon["speed"]))
     time.sleep(1)
 
     stat_choice = stat_choice = input("Which stat would you like to use?\n")
-    while stat_choice not in ["id", "height", "weight"]:
+    while stat_choice not in ["id", "height", "weight", "speed"]:
         stat_choice = input("Which stat would you like to use?\n")
 
     game_result = compare_stats(stat_choice, players_pokemon, computers_pokemon)
@@ -59,8 +59,8 @@ def run():
     print("Your Pokémon's {} is {}".format(stat_choice, str(players_pokemon[stat_choice])))
     print("------------")
     time.sleep(1)
-    print("The computer's Pokémon is {}".format(computers_pokemon["name"]))
-    print("The computer's Pokémon's {} is {}".format(stat_choice, str(computers_pokemon[stat_choice])))
+    print("Your opponent's Pokémon is {}".format(computers_pokemon["name"]))
+    print("Your opponent's Pokémon's {} is {}".format(stat_choice, str(computers_pokemon[stat_choice])))
     print("------------")
     time.sleep(1)
 
@@ -68,17 +68,22 @@ def run():
     return game_result[1]
 
 games_won = 0
+games_lost = 0
 result = run()
 if result == 0:
     games_won += 1
+elif result == 1:
+    games_lost += 1
 
-print("So far you won {} games".format(games_won))
+print("So far you won {} games and lost {} games".format(games_won, games_lost))
 play_again = input("Do you want to play again? y/n\n")
 while play_again == "y":
     result = run()
     if result == 0:
         games_won += 1
-    print("So far you won {} games".format(games_won))
+    elif result == 1:
+        games_lost += 1
+    print("So far you won {} games and lost {} games".format(games_won, games_lost))
     play_again = input("Do you want to play again? y/n\n")
 
 print("Goodbye!")
