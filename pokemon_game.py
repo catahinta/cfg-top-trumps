@@ -32,15 +32,6 @@ def print_stats(pokemon):
     for stat in pokemon:
         print("Its {} is {}".format(stat, pokemon[stat]))
 
-
-# def display_results(result):
-#     if result == "player":
-#         return "YOU WIN!"
-#     elif result == "computer":
-#         return "The computer wins"
-#     elif result == "draw":
-#         return "It's a draw"
-
 def run():
     print("Getting you a random pokemon card")
     print("------------")
@@ -51,7 +42,6 @@ def run():
     computers_pokemon = get_random_pokemon()
 
     print("Your Pokémon is {}\n".format(players_pokemon["name"]))
-    # print("It's id is {}, it's height is {}, it's weight is {}, it's attack is {} and it's speed is {}\n".format(players_pokemon["id"], players_pokemon["height"], players_pokemon["weight"], players_pokemon["attack"],players_pokemon["speed"]))
     print_stats(players_pokemon)
     time.sleep(1)
 
