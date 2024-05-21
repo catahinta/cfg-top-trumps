@@ -1,8 +1,9 @@
-# This is the project file for CFG python course
 import random
 import requests
 import time
 
+
+print("Hello and welcome to this Pokémon game!\n")
 url = "https://pokeapi.co/api/v2/pokemon/"
 
 def get_random_pokemon():
@@ -19,11 +20,11 @@ def get_random_pokemon():
 
 def compare_stats(stat, players_pokemon, computers_pokemon):
     if players_pokemon[stat] > computers_pokemon[stat]:
-        return "YOU WIN!"
+        return ["YOU WIN!", 0]
     elif players_pokemon[stat] < computers_pokemon[stat]:
-        return "The computer wins"
+        return  ["The computer wins", 1]
     else:
-        return "It's a draw"
+        return ["It's a draw", 2]
 
 # def display_results(result):
 #     if result == "player":
@@ -34,7 +35,6 @@ def compare_stats(stat, players_pokemon, computers_pokemon):
 #         return "It's a draw"
 
 def run():
-    print("Hello and welcome to this Pokémon game!\n")
     print("Getting you a random pokemon card")
     print("------------")
     print("------------")
@@ -47,7 +47,9 @@ def run():
     print("It's id is {}, it's height is {} and it's weight is {}\n".format(players_pokemon["id"], players_pokemon["height"], players_pokemon["weight"]))
     time.sleep(1)
 
-    stat_choice = input("Which stat would you like to use?\n")
+    stat_choice = stat_choice = input("Which stat would you like to use?\n")
+    while stat_choice not in ["id", "height", "weight"]:
+        stat_choice = input("Which stat would you like to use?\n")
 
     game_result = compare_stats(stat_choice, players_pokemon, computers_pokemon)
 
@@ -62,6 +64,21 @@ def run():
     print("------------")
     time.sleep(1)
 
-    print(game_result)
+    print(game_result[0])
+    return game_result[1]
 
-run()
+games_won = 0
+result = run()
+if result == 0:
+    games_won += 1
+
+print("So far you won {} games".format(games_won))
+play_again = input("Do you want to play again? y/n\n")
+while play_again == "y":
+    result = run()
+    if result == 0:
+        games_won += 1
+    print("So far you won {} games".format(games_won))
+    play_again = input("Do you want to play again? y/n\n")
+
+print("Goodbye!")
