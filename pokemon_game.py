@@ -15,7 +15,8 @@ def get_random_pokemon():
         "id": pokemon_data["id"],
         "height": pokemon_data["height"],
         "weight": pokemon_data["weight"],
-        "speed": pokemon_data["stats"][-1]["base_stat"]
+        "speed": pokemon_data["stats"][-1]["base_stat"],
+        "attack": pokemon_data["stats"][1]["base_stat"]
     }
 
 def compare_stats(stat, players_pokemon, computers_pokemon):
@@ -25,6 +26,11 @@ def compare_stats(stat, players_pokemon, computers_pokemon):
         return  ["You lose :(", 1]
     else:
         return ["It's a draw", 2]
+
+def print_stats(pokemon):
+    for stat in pokemon:
+        print("It's {} is {}".format(stat, pokemon[stat]))
+
 
 # def display_results(result):
 #     if result == "player":
@@ -44,11 +50,12 @@ def run():
     computers_pokemon = get_random_pokemon()
 
     print("Your Pokémon is {}\n".format(players_pokemon["name"]))
-    print("It's id is {}, it's height is {}, it's weight is {} and it's speed is {}\n".format(players_pokemon["id"], players_pokemon["height"], players_pokemon["weight"], players_pokemon["speed"]))
+    # print("It's id is {}, it's height is {}, it's weight is {}, it's attack is {} and it's speed is {}\n".format(players_pokemon["id"], players_pokemon["height"], players_pokemon["weight"], players_pokemon["attack"],players_pokemon["speed"]))
+    print_stats(players_pokemon)
     time.sleep(1)
 
     stat_choice = stat_choice = input("Which stat would you like to use?\n")
-    while stat_choice not in ["id", "height", "weight", "speed"]:
+    while stat_choice not in ["id", "height", "weight", "speed", "attack"]:
         stat_choice = input("Which stat would you like to use?\n")
 
     game_result = compare_stats(stat_choice, players_pokemon, computers_pokemon)
