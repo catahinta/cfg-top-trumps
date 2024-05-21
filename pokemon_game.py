@@ -19,19 +19,19 @@ def get_random_pokemon():
 
 def compare_stats(stat, players_pokemon, computers_pokemon):
     if players_pokemon[stat] > computers_pokemon[stat]:
-        return "player"
-    elif players_pokemon[stat] < computers_pokemon[stat]:
-        return "computer"
-    else:
-        return "draw"
-
-def display_results(result):
-    if result == "player":
         return "YOU WIN!"
-    elif result == "computer":
+    elif players_pokemon[stat] < computers_pokemon[stat]:
         return "The computer wins"
-    elif result == "draw":
+    else:
         return "It's a draw"
+
+# def display_results(result):
+#     if result == "player":
+#         return "YOU WIN!"
+#     elif result == "computer":
+#         return "The computer wins"
+#     elif result == "draw":
+#         return "It's a draw"
 
 def run():
     print("Hello and welcome to this Pokémon game!\n")
@@ -62,6 +62,6 @@ def run():
     print("------------")
     time.sleep(1)
 
-    print(display_results(game_result))
+    print(game_result)
 
 run()
